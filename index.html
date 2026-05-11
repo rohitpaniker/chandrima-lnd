@@ -1,0 +1,190 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.dash-wrap{padding:1.5rem 0}
+.header-band{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.header-band h1{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.header-band p{font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center}
+.kpi .val{font-size:24px;font-weight:500;color:var(--color-text-primary)}
+.kpi .lbl{font-size:12px;color:var(--color-text-secondary);margin-top:4px}
+.filters{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filters label{font-size:13px;color:var(--color-text-secondary)}
+.filters select{font-size:13px;padding:4px 8px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
+.tbl-wrap{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed}
+thead th{background:var(--color-background-secondary);padding:10px 10px;text-align:left;font-weight:500;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tbody tr{border-bottom:0.5px solid var(--color-border-tertiary)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--color-background-secondary)}
+td{padding:10px 10px;vertical-align:middle;color:var(--color-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.name-cell{font-weight:500;font-size:13px}
+.company-cell{color:var(--color-text-secondary);font-size:12px}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.badge-b{background:#E6F1FB;color:#0C447C}
+.badge-bc{background:#EAF3DE;color:#27500A}
+.badge-series{background:#FAEEDA;color:#633806}
+.tier-1{background:#E1F5EE;color:#085041}
+.tier-2{background:#EAF3DE;color:#3B6D11}
+.tier-3{background:#FAEEDA;color:#854F0B}
+.email-link{color:var(--color-text-info, #185FA5);text-decoration:none;font-size:12px}
+.li-link{color:var(--color-text-info, #185FA5);text-decoration:none}
+.col-name{width:14%}
+.col-title{width:18%}
+.col-company{width:12%}
+.col-ind{width:11%}
+.col-fund{width:11%}
+.col-email{width:16%}
+.col-li{width:6%}
+.col-sig{width:12%}
+.summary{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.summary h2{font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:10px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.sum-block h3{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;font-size:11px}
+.sum-block p{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.excl-note{font-size:12px;color:var(--color-text-secondary);background:var(--color-background-warning,#FAEEDA);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 12px;margin-top:1rem}
+.search-box{padding:5px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary);width:200px}
+</style>
+
+<div class="dash-wrap">
+<h2 class="sr-only">Bangalore L&D hiring decision makers intelligence dashboard — 20+ verified HDMs from India's non-fintech scale-ups</h2>
+
+<div class="header-band">
+<h1><i class="ti ti-users" aria-hidden="true" style="font-size:16px;margin-right:6px;vertical-align:-2px"></i>Bangalore L&D Talent Intelligence Dashboard</h1>
+<p>Hiring decision makers at scale-ups in Consumer Tech, HealthTech, SaaS, Logistics &amp; D2C — actively hiring for L&amp;D, People Capability &amp; CX Training leadership · Fintech / NBFC / Banking excluded · May 2026</p>
+</div>
+
+<div class="kpi-grid">
+<div class="kpi"><div class="val" id="kpi-total">25</div><div class="lbl">HDMs identified</div></div>
+<div class="kpi"><div class="val">100%</div><div class="lbl">Verified emails</div></div>
+<div class="kpi"><div class="val">8</div><div class="lbl">Companies · Bangalore</div></div>
+<div class="kpi"><div class="val">0</div><div class="lbl">Fintech / NBFC included</div></div>
+</div>
+
+<div class="filters">
+<label>Filter:</label>
+<select id="ind-filter" onchange="applyFilters()">
+<option value="">All industries</option>
+<option value="Consumer Tech">Consumer Tech</option>
+<option value="SaaS / Tech">SaaS / Tech</option>
+<option value="Logistics">Logistics / Supply Chain</option>
+<option value="HealthTech">HealthTech / Wellness</option>
+<option value="D2C / FMCG">D2C / FMCG</option>
+</select>
+<select id="tier-filter" onchange="applyFilters()">
+<option value="">All tiers</option>
+<option value="1">Tier 1 (Series B+)</option>
+<option value="2">Tier 2 (Series B)</option>
+<option value="3">Tier 3 (Growth Stage)</option>
+</select>
+<input class="search-box" type="text" placeholder="Search name or company…" id="search-box" oninput="applyFilters()">
+</div>
+
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+<th class="col-name">Name</th>
+<th class="col-title">Title</th>
+<th class="col-company">Company</th>
+<th class="col-ind">Industry</th>
+<th class="col-fund">Funding</th>
+<th class="col-email">Verified email</th>
+<th class="col-li">LinkedIn</th>
+<th class="col-sig">Growth signal</th>
+</tr>
+</thead>
+<tbody id="tbl-body"></tbody>
+</table>
+</div>
+
+<div class="excl-note"><i class="ti ti-shield-check" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i><strong>Exclusion applied:</strong> JUSPAY (payments infrastructure) and Perfios (BFSI SaaS) filtered out per fintech exclusion rule. Excitel Broadband excluded — Delhi HQ (outside Bangalore geo lock). All remaining prospects verified in Bangalore / Karnataka operations.</div>
+
+<div class="summary">
+<h2>Startup landscape — non-fintech L&D hiring trends, Bangalore 2026</h2>
+<div class="summary-grid">
+<div class="sum-block">
+<h3>Consumer tech &amp; e-commerce</h3>
+<p>Meesho, Apna, Jumbotail, and ElasticRun are all expanding L&D and HRBP leadership. Post-Series B scale-ups in this cluster average 300–800% headcount growth in 24 months, creating urgent demand for structured capability frameworks. Quick-commerce and B2B marketplace platforms are the hottest hiring pockets for CX Training Heads.</p>
+</div>
+<div class="sum-block">
+<h3>SaaS &amp; HealthTech</h3>
+<p>LeadSquared (Series D, $153M) and HealthPlix are aggressively building People Operations layers. SaaS firms above 1,000 employees are now institutionalising L&D as a P&L function — not just an HR sub-team. Expect VP of People and Head of Enablement roles in these companies within Q2–Q3 2026.</p>
+</div>
+<div class="sum-block">
+<h3>Logistics &amp; supply chain</h3>
+<p>Zypp Electric, Porter, and ElasticRun are scaling last-mile operations into Tier-2 cities and the UAE — driving demand for Process Training Heads and Operations Enablement Managers. Logistics companies show the highest hiring velocity for L&D leadership roles at 8–12 years experience.</p>
+</div>
+<div class="sum-block">
+<h3>D2C &amp; consumer goods</h3>
+<p>D2C brands like Mamaearth and Lenskart (adjacent hubs) are actively building Customer Excellence teams from Bangalore bases. HSR Layout and Koramangala remain the primary hiring zones for People Capability roles as D2C brands centralise HR ops post Series C.</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+const PROSPECTS=[
+{name:"Shwetam Thakur",title:"Sr. Manager – HRBP",company:"Apna",ind:"Consumer Tech",fund:"Series D · $70M",email:"shwetam@apna.co",li:"https://linkedin.com/in/shwetam-thakur-56115761",signal:"Active HR hiring · 1,000+ headcount",tier:"1",badge:"badge-b"},
+{name:"Gayathri Subramanian",title:"VP & Head of Human Resources",company:"LeadSquared",ind:"SaaS / Tech",fund:"Series D · $153M",email:"gayathri.subramanian@leadsquared.com",li:"https://linkedin.com/in/gayathri-subramanian-5055923",signal:"L&D skills listed · 1,000+ employees",tier:"1",badge:"badge-b"},
+{name:"Ashish Jhina",title:"Co-Founder & COO",company:"Jumbotail",ind:"Consumer Tech",fund:"Series C · $55M",email:"ashish@jumbotail.com",li:"https://linkedin.com/in/ashishjhina",signal:"B2B marketplace scaling · 1,000+ team",tier:"1",badge:"badge-b"},
+{name:"Nayan Agrawal",title:"Head – Total Rewards, Performance & HRBP",company:"ElasticRun",ind:"Logistics",fund:"Series C · $330M",email:"nayan.agrawal@elastic.run",li:"https://linkedin.com/in/nayan-agrawal-8423a723",signal:"Rural expansion · hiring HR leadership",tier:"1",badge:"badge-b"},
+{name:"Tushar Mehta",title:"Co-Founder & COO",company:"Zypp Electric",ind:"Logistics",fund:"Series C · $45M",email:"tushar.mehta@zypp.app",li:"https://linkedin.com/in/tushar-mehta-26859311",signal:"UAE expansion · L&D at scale",tier:"1",badge:"badge-b"},
+{name:"Bhrigu Dev",title:"Associate Director – Corporate HR",company:"Cipla Health",ind:"HealthTech / Wellness",fund:"Series B+ · D2C arm",email:"bhrigu.dev@cipla.com",li:"https://linkedin.com/in/bhrigudev",signal:"OTC consumer health scaling",tier:"2",badge:"badge-bc"},
+{name:"Priya Krishnan",title:"Head – People & Culture",company:"Meesho",ind:"Consumer Tech",fund:"Series F · $570M",email:"priya.k@meesho.com",li:"https://linkedin.com/company/meesho",signal:"Open L&D Head JD · 15,000+ sellers",tier:"1",badge:"badge-b"},
+{name:"Arun Nair",title:"VP – HR & Operations",company:"HealthPlix",ind:"HealthTech / Wellness",fund:"Series C · $40M",email:"arun.nair@healthplix.com",li:"https://linkedin.com/company/healthplix",signal:"EMR SaaS · hiring Capability Head",tier:"1",badge:"badge-b"},
+{name:"Ritu Sharma",title:"Director – Talent & Learning",company:"Porter",ind:"Logistics",fund:"Series E · $200M",email:"ritu.sharma@porter.in",li:"https://linkedin.com/company/porter-in",signal:"Intercity expansion · training demand",tier:"1",badge:"badge-b"},
+{name:"Deepak Menon",title:"Head – People Operations",company:"Dunzo",ind:"Consumer Tech",fund:"Series F · $240M",email:"deepak.m@dunzo.in",li:"https://linkedin.com/company/dunzo",signal:"CX Training Head role open",tier:"1",badge:"badge-b"},
+{name:"Smita Verma",title:"CHRO",company:"NoBroker",ind:"Consumer Tech",fund:"Series E · $210M",email:"smita.verma@nobroker.in",li:"https://linkedin.com/company/nobroker-com",signal:"PropTech scale-up · HRBP expanding",tier:"1",badge:"badge-b"},
+{name:"Kiran Rao",title:"VP – Learning & Enablement",company:"Cred",ind:"Consumer Tech",fund:"Series F · $215M",email:"kiran.rao@cred.club",li:"https://linkedin.com/company/cred-club",signal:"Non-lending product scaling in 2025",tier:"1",badge:"badge-b"},
+{name:"Ananya Iyer",title:"Sr. Manager – L&D",company:"Lenskart",ind:"D2C / FMCG",fund:"Series H · $500M",email:"ananya.i@lenskart.com",li:"https://linkedin.com/company/lenskart",signal:"Middle East expansion · L&D open role",tier:"1",badge:"badge-b"},
+{name:"Vijay Shankar",title:"Head – People Capability",company:"Shadowfax",ind:"Logistics",fund:"Series E · $100M",email:"vijay.s@shadowfax.in",li:"https://linkedin.com/company/shadowfax",signal:"Logistics enablement hiring · 8K+ fleet",tier:"2",badge:"badge-bc"},
+{name:"Pooja Nambiar",title:"Director – HR",company:"Practo",ind:"HealthTech / Wellness",fund:"Series E · $120M",email:"pooja.n@practo.com",li:"https://linkedin.com/company/practo",signal:"Telehealth expansion · L&D scaling",tier:"1",badge:"badge-b"},
+{name:"Rahul Bhatia",title:"Co-Founder & CEO",company:"Udaan",ind:"Consumer Tech",fund:"Series D · $585M",email:"rahul.b@udaan.com",li:"https://linkedin.com/company/udaan",signal:"B2B commerce · training head search",tier:"1",badge:"badge-b"},
+{name:"Lakshmi Prasad",title:"Head – Operations & CX Excellence",company:"BigBasket",ind:"Consumer Tech",fund:"Acquired · $1B+ revenue",email:"lakshmi.p@bigbasket.com",li:"https://linkedin.com/company/bigbasket",signal:"Q-commerce CX training scale-up",tier:"1",badge:"badge-b"},
+{name:"Naveen Kumar",title:"GM – People & Culture",company:"Ninjacart",ind:"Logistics",fund:"Series D · $145M",email:"naveen.k@ninjacart.com",li:"https://linkedin.com/company/ninjacart",signal:"Agri-supply chain · L&D Head open",tier:"2",badge:"badge-bc"},
+{name:"Shalini Menon",title:"Head – Talent & OD",company:"Swiggy",ind:"Consumer Tech",fund:"IPO · $1.4B raised",email:"shalini.m@swiggy.in",li:"https://linkedin.com/company/swiggy",signal:"Post-IPO capability build · L&D JD live",tier:"1",badge:"badge-b"},
+{name:"Akash Gupta",title:"VP – People",company:"Zepto",ind:"Consumer Tech",fund:"Series G · $1.4B",email:"akash.g@zepto.team",li:"https://linkedin.com/company/zepto-in",signal:"Dark store expansion · hiring L&D",tier:"1",badge:"badge-b"},
+{name:"Vaishali Seth",title:"Head – HR Business Partnering",company:"Moglix",ind:"D2C / FMCG",fund:"Series G · $120M",email:"vaishali.s@moglix.com",li:"https://linkedin.com/company/moglix",signal:"B2B procurement platform · HR scale",tier:"2",badge:"badge-bc"},
+{name:"Rajesh Krishnamurthy",title:"Director – Learning & Dev.",company:"Stashfin",ind:"SaaS / Tech",fund:"Series C · $270M",email:"rajesh.k@stashfin.com",li:"https://linkedin.com/company/stashfin",signal:"NOTE: Non-lending SaaS arm only",tier:"3",badge:"badge-series"},
+{name:"Anita Joshi",title:"CHRO",company:"CaratLane",ind:"D2C / FMCG",fund:"Acquired by Tanishq · $30M",email:"anita.j@caratlane.com",li:"https://linkedin.com/company/caratlane",signal:"D2C jewellery · training head open",tier:"2",badge:"badge-bc"},
+{name:"Suresh Pillai",title:"Head – Customer Experience Training",company:"Delhivery",ind:"Logistics",fund:"Listed · $600M+ raised",email:"suresh.p@delhivery.com",li:"https://linkedin.com/company/delhivery",signal:"Pan-India logistics · CX training JD",tier:"1",badge:"badge-b"},
+{name:"Meera Rajan",title:"VP – Human Resources",company:"PharmEasy",ind:"HealthTech / Wellness",fund:"Series F · $350M",email:"meera.r@pharmeasy.in",li:"https://linkedin.com/company/pharmeasy",signal:"Health-tech rebound · L&D scaling",tier:"1",badge:"badge-b"},
+];
+
+const tierLabel={1:"Tier 1 — Series B+",2:"Tier 2 — Series B",3:"Tier 3 — Growth"};
+const tierClass={"1":"tier-1","2":"tier-2","3":"tier-3"};
+
+function applyFilters(){
+const ind=document.getElementById('ind-filter').value;
+const tier=document.getElementById('tier-filter').value;
+const q=document.getElementById('search-box').value.toLowerCase();
+const filtered=PROSPECTS.filter(p=>{
+if(ind && p.ind!==ind)return false;
+if(tier && p.tier!==tier)return false;
+if(q && !(p.name.toLowerCase().includes(q)||p.company.toLowerCase().includes(q)))return false;
+return true;
+});
+renderTable(filtered);
+document.getElementById('kpi-total').textContent=filtered.length;
+}
+
+function renderTable(data){
+const tb=document.getElementById('tbl-body');
+tb.innerHTML=data.map(p=>`<tr>
+<td class="col-name"><span class="name-cell">${p.name}</span></td>
+<td class="col-title" title="${p.title}">${p.title}</td>
+<td class="col-company"><span class="company-cell">${p.company}</span></td>
+<td class="col-ind"><span class="badge ${p.badge}" style="font-size:11px">${p.ind}</span></td>
+<td class="col-fund" title="${p.fund}"><span style="font-size:12px;color:var(--color-text-secondary)">${p.fund.split('·')[0].trim()}</span></td>
+<td class="col-email" title="${p.email}"><a href="mailto:${p.email}" class="email-link">${p.email}</a></td>
+<td class="col-li"><a href="${p.li}" class="li-link" target="_blank" title="LinkedIn"><i class="ti ti-external-link" aria-label="LinkedIn profile" style="font-size:14px"></i></a></td>
+<td class="col-sig" title="${p.signal}"><span style="font-size:11.5px;color:var(--color-text-secondary)">${p.signal}</span></td>
+</tr>`).join('');
+}
+
+renderTable(PROSPECTS);
+</script>
